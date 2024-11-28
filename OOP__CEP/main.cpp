@@ -31,7 +31,7 @@ int main()
 	
 	
 	choice = mainMenu();
-	//system("cls");
+	system("cls");
 	switch (choice)
 	{
 		case 1:
@@ -51,45 +51,38 @@ int main()
 		}
 		case 2:
 		{	
-			//cout << "Enter Public Key:" << endl;//format =>		n:e or n:d
-			//takeKey(n, e);//take key inputs by reference
-			//obj.setE(e);// Set Public key
-			//obj.setN(n);//set private key
-			
-			obj.setE(307);// Set Public key
-			obj.setN(746);//set private key
+			cout << "Enter Public Key:" << endl;//format =>		n:e or n:d
+			takeKey(n, e);//take key inputs by reference
+			obj.setE(e);// Set Public key
+			obj.setN(n);//set private key
+		
 			system("cls");//clear console for better user expirence
-			//nameOfFile = takeName();
-			nameOfFile = "test.txt";
+			nameOfFile = takeName();
+			
 			file source(nameOfFile);
 
 			cout << "File encryption in progress..." << endl;
 			obj.encrypt_file(source);
-			//system("cls");
+			system("cls");
 
 			cout << "Encryption successful. Your file is now securely locked." << endl;
 			break;
 		}
 		case 3:
 		{
-			//cout << "Enter private Key:" << endl;//format =>		n:e or n:d
-			//takeKey(n, d);//take key inputs by reference
-			//obj.setD(d);// Set Public key
-			//obj.setN(n);//set private key
-
-			obj.setD(103);// Set Public key
-			obj.setN(746);//set private key
-
+			cout << "Enter private Key:" << endl;//format =>		n:e or n:d
+			takeKey(n, d);//take key inputs by reference
+			obj.setD(d);// Set Public key
+			obj.setN(n);//set private key
 
 			system("cls");//clear console for better user expirence
-			//nameOfFile = takeName(false);
+			nameOfFile = takeName(false);
 
-			nameOfFile = "test.txt";
 			file source(nameOfFile);
 
 			cout << "File decryption in progress..." << endl;
 			obj.decrypt_file(source);
-			//system("cls");
+			system("cls");
 
 			cout << "The decryption process has been completed successfully." << endl;
 			break;
@@ -110,24 +103,7 @@ int main()
 	}
 	
 	
-	/*
-	obj.setD(41);
-	obj.setE(29);
-	obj.setN(133);
-
-
-	for (int i = 0; i < 256; i++) {
-		// Encrypt the message (i) with exponent e
-		unsigned long long encrypted = obj.encrypt_char(i);
-		cout << "Original: " << i << ", Encrypted: " << encrypted;
-
-		// Decrypt the encrypted message with exponent d
-		unsigned long long decrypted = obj.decrypt_char(encrypted);
-		if (decrypted != i) {
-			cout << "Error at i = " << i << endl;
-		}
-		cout << ", Decrypted: " << decrypted << endl;
-	}*/
+	
 	cout <<endl<< "Thank you for using the File Encryption & Decryption Program" << endl;
 	
 	return 0;

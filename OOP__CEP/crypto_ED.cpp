@@ -29,7 +29,6 @@ unsigned int crypto::encrypt_char(unsigned char i)//encrypting character
 string crypto::ascii_string(unsigned int x) {
     string result = "";
     unsigned char i = x;
-    cout << x << i;
     if (i == '\n') {
         result.push_back('\\');
         result.push_back('n');
@@ -50,11 +49,7 @@ string crypto::ascii_string(unsigned int x) {
         result.push_back(i); // Correctly handle the integer
     }
 
-    cout << endl;
-    for (unsigned char c : result) {
-        cout << (int)c << " "; // Display ASCII values
-    }
-    cout << endl;
+   
 
     return result;
 }
@@ -63,15 +58,15 @@ string crypto:: encrypt_character(unsigned char i)
 {
     
 	unsigned int n = encrypt_char(i);
-    //cout << n << endl;
+   
 	unsigned int part1 = 0, part2 = 0, part3 = 0, part4 = 0;
 	string result = "";
-    //cout << n << endl;
+
     // Divide the number into four parts with each part being <= 255
-    if (n > 255) 
+    if (n > 250) 
 	{
-        part1 = 255;
-        n -= 255;
+        part1 = 250;
+        n -= 250;
     }
 	else 
 	{
@@ -79,10 +74,10 @@ string crypto:: encrypt_character(unsigned char i)
         n = 0;
     }
 
-    if (n > 255)
+    if (n > 250)
 	{
-        part2 = 255;
-        n -= 255;
+        part2 = 250;
+        n -= 250;
     } 
 	else 
 	{
@@ -90,10 +85,10 @@ string crypto:: encrypt_character(unsigned char i)
         n = 0;
     }
 
-    if (n > 255) 
+    if (n > 250) 
 	{
-        part3 = 255;
-        n -= 255;
+        part3 = 250;
+        n -= 250;
     }
 	else 
 	{
@@ -103,13 +98,9 @@ string crypto:: encrypt_character(unsigned char i)
 
     // The remaining part goes to part4
     part4 = n;
-    cout <<"parts"<< part1 << endl;
-    cout << part2<<endl;
-    cout << part3<<endl;
-    cout << part4<<endl;
+   
    
 	result = ascii_string(part1);
-    cout << (int)result[0];
 	result.append(ascii_string(part2));
 	result.append(ascii_string(part3));
 	result.append(ascii_string(part4));
@@ -146,7 +137,6 @@ void crypto::encrypt_string(string line)
 	{
 		encrypted_text.append(encrypt_character(line[i]));
 	}
-    //cout << encrypted_text;
 }
 
 void crypto::decrypt_string(string line)
@@ -156,7 +146,7 @@ void crypto::decrypt_string(string line)
     unsigned int temp;  // Temporary string to accumulate decrypted characters
     int i = 0;
 
-    while (i < size)
+    while (i < size && size-i>=4)
     {
         // Step 1: Retrieve the four parts (each can be an escaped character or regular character)
         unsigned int part1 = 0, part2 = 0, part3 = 0, part4 = 0;
@@ -181,12 +171,12 @@ void crypto::decrypt_string(string line)
                 i += 2;  // Skip '\\' and 'r'
             }
             else {
-                part1 = line[i];
+                part1 = static_cast<int>(static_cast<unsigned char>(line[i]));
                 i++;  // Skip the '\\'
             }
         }
         else {
-            part1 = line[i];
+            part1 = static_cast<int>(static_cast<unsigned char>(line[i]));
             i++;
         }
 
@@ -210,12 +200,12 @@ void crypto::decrypt_string(string line)
                 i += 2;
             }
             else {
-                part2 = line[i];
+                part2 = static_cast<int>(static_cast<unsigned char>(line[i]));
                 i++;
             }
         }
         else {
-            part2 = line[i];
+            part2 = static_cast<int>(static_cast<unsigned char>(line[i]));
             i++;
         }
 
@@ -239,12 +229,12 @@ void crypto::decrypt_string(string line)
                 i += 2;
             }
             else {
-                part3 = line[i];
+                part3 = static_cast<int>(static_cast<unsigned char>(line[i]));
                 i++;
             }
         }
         else {
-            part3 = line[i];
+            part3 = static_cast<int>(static_cast<unsigned char>(line[i]));
             i++;
         }
 
@@ -268,20 +258,16 @@ void crypto::decrypt_string(string line)
                 i += 2;
             }
             else {
-                part4 = line[i];
+                part4 = static_cast<int>(static_cast<unsigned char>(line[i]));
                 i++;
             }
         }
         else {
-            part4 = line[i];
+            part4 = static_cast<int>(static_cast<unsigned char>(line[i]));
             i++;
         }
 
         temp = part1 + part2 + part3 + part4;
-        cout << part1 << endl;
-        cout << part2 << endl;
-        cout << part3 << endl;
-        cout << part4;
         decrypted_text.push_back(decrypt_char(temp));
     }
 }
@@ -289,7 +275,7 @@ void crypto::decrypt_string(string line)
 void crypto::encrypt_file(file& source, int cLine)
 {
 	string data = source.readLineNum(cLine);
-    cout << data<<endl;
+    
 	encrypt_string(data);
 	source.writeFile(getEncryptedText());
 
