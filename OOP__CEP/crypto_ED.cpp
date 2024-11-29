@@ -9,7 +9,7 @@ using namespace std;
 
 
 //logical member functions
-unsigned int crypto::encrypt_char(unsigned char i)//encrypting character
+unsigned int crypto::encrypt_char(unsigned int i)//encrypting character
 {
 	unsigned long long exp = E;//ensuring data member value not change
 	unsigned long long msg = i;
@@ -27,31 +27,19 @@ unsigned int crypto::encrypt_char(unsigned char i)//encrypting character
 	return result;
 }
 string crypto::ascii_string(unsigned int x) {
-    string result = "";
-    unsigned char i = x;
-    if (i == '\n') {
-        result.push_back('\\');
-        result.push_back('n');
+    switch (x) {
+    case '\n': return "\\n";
+    case '\r': return "\\r";
+    case '\t': return "\\t";
+    case '\0': return "\\0";
+    case '\x1A': return "\\x1A";
+    case '\b': return "\\b";
+    case '\f': return "\\f";
+    case '\v': return "\\v";
+    case '\a': return "\\a";
+    case '\e': return "\\e";
+    default: return std::string(1, x); // Return the character itself if no escape is needed
     }
-    else if (i == '\r') {
-        result.push_back('\\');
-        result.push_back('r');
-    }
-    else if (i == '\t') {
-        result.push_back('\\');
-        result.push_back('t');
-    }
-    else if (i == '\0') {
-        result.push_back('\\');
-        result.push_back('0');
-    }
-    else {
-        result.push_back(i); // Correctly handle the integer
-    }
-
-   
-
-    return result;
 }
 
 string crypto:: encrypt_character(unsigned char i)
@@ -73,7 +61,7 @@ string crypto:: encrypt_character(unsigned char i)
         part1 = n;
         n = 0;
     }
-
+  
     if (n > 250)
 	{
         part2 = 250;
@@ -112,6 +100,7 @@ string crypto:: encrypt_character(unsigned char i)
 
 unsigned char crypto::decrypt_char(unsigned int i)//encrypting character
 {
+    
 	unsigned long long exp = D;//ensuring data member value not change
 	unsigned long long msg = i;
 	unsigned long long result = 1;
@@ -138,140 +127,48 @@ void crypto::encrypt_string(string line)
 		encrypted_text.append(encrypt_character(line[i]));
 	}
 }
-
-void crypto::decrypt_string(string line)
-{
-    int size = line.size();
-    decrypted_text = "";  // Initialize decrypted_text
-    unsigned int temp;  // Temporary string to accumulate decrypted characters
-    int i = 0;
-
-    while (i < size && size-i>=4)
-    {
-        // Step 1: Retrieve the four parts (each can be an escaped character or regular character)
-        unsigned int part1 = 0, part2 = 0, part3 = 0, part4 = 0;
-
-        // Retrieve part 1
-        if (line[i] == '\\' && i + 1 < line.size()) {
-            // Handle escape sequences for part 1
-            if (line[i + 1] == 't') {
-                part1 = '\t';
-                i += 2;  // Skip '\\' and 't'
-            }
-            else if (line[i + 1] == 'n') {
-                part1 = '\n';
-                i += 2;  // Skip '\\' and 'n'
-            }
-            else if (line[i + 1] == '0') {
-                part1 = '\0';
-                i += 2;  // Skip '\\' and '0'
-            }
-            else if (line[i + 1] == 'r') {
-                part1 = '\r';
-                i += 2;  // Skip '\\' and 'r'
-            }
-            else {
-                part1 = static_cast<int>(static_cast<unsigned char>(line[i]));
-                i++;  // Skip the '\\'
+unsigned int crypto:: decode_escape_sequence(const std::string& line, int& index) {
+    if (line[index] == '\\' && index + 1 < line.size()) {
+        switch (line[index + 1]) {
+        case 't': index += 2; return '\t';//1
+        case 'n': index += 2; return '\n';//2
+        case '0': index += 2; return '\0';//3
+        case 'r': index += 2; return '\r';//4
+        case 'b': index += 2; return '\b';//5
+        case 'f': index += 2; return '\f';//6
+        case 'v': index += 2; return '\v';//7
+        case 'a': index += 2; return '\a';//8
+        case 'e': index += 2; return '\e';//9
+        case 'x'://10
+            {
+                if (index + 3 < line.size() && line[index + 2] == '1' && line[index + 3] == 'A')
+                {
+                    index += 4; // Skip over "\x1A"
+                    return 26; // ASCII value for control character SUB
+                }
+                break;
             }
         }
-        else {
-            part1 = static_cast<int>(static_cast<unsigned char>(line[i]));
-            i++;
-        }
-
-        // Retrieve part 2
-        if (line[i] == '\\' && i + 1 < line.size()) {
-            // Handle escape sequences for part 2
-            if (line[i + 1] == 't') {
-                part2 = '\t';
-                i += 2;
-            }
-            else if (line[i + 1] == 'n') {
-                part2 = '\n';
-                i += 2;
-            }
-            else if (line[i + 1] == '0') {
-                part2 = '\0';
-                i += 2;
-            }
-            else if (line[i + 1] == 'r') {
-                part2 = '\r';
-                i += 2;
-            }
-            else {
-                part2 = static_cast<int>(static_cast<unsigned char>(line[i]));
-                i++;
-            }
-        }
-        else {
-            part2 = static_cast<int>(static_cast<unsigned char>(line[i]));
-            i++;
-        }
-
-        // Retrieve part 3
-        if (line[i] == '\\' && i + 1 < line.size()) {
-            // Handle escape sequences for part 3
-            if (line[i + 1] == 't') {
-                part3 = '\t';
-                i += 2;
-            }
-            else if (line[i + 1] == 'n') {
-                part3 = '\n';
-                i += 2;
-            }
-            else if (line[i + 1] == '0') {
-                part3 = '\0';
-                i += 2;
-            }
-            else if (line[i + 1] == 'r') {
-                part3 = '\r';
-                i += 2;
-            }
-            else {
-                part3 = static_cast<int>(static_cast<unsigned char>(line[i]));
-                i++;
-            }
-        }
-        else {
-            part3 = static_cast<int>(static_cast<unsigned char>(line[i]));
-            i++;
-        }
-
-        // Retrieve part 4
-        if (line[i] == '\\' && i + 1 < line.size()) {
-            // Handle escape sequences for part 4
-            if (line[i + 1] == 't') {
-                part4 = '\t';
-                i += 2;
-            }
-            else if (line[i + 1] == 'n') {
-                part4 = '\n';
-                i += 2;
-            }
-            else if (line[i + 1] == '0') {
-                part4 = '\0';
-                i += 2;
-            }
-            else if (line[i + 1] == 'r') {
-                part4 = '\r';
-                i += 2;
-            }
-            else {
-                part4 = static_cast<int>(static_cast<unsigned char>(line[i]));
-                i++;
-            }
-        }
-        else {
-            part4 = static_cast<int>(static_cast<unsigned char>(line[i]));
-            i++;
-        }
-
-        temp = part1 + part2 + part3 + part4;
-        decrypted_text.push_back(decrypt_char(temp));
     }
+    return static_cast<unsigned char>(line[index++]); // Return the current character and increment index
 }
 
+void crypto:: decrypt_string(string line) {
+    int size = line.size();
+    decrypted_text.clear(); // Initialize decrypted_text
+    unsigned int temp;
+    int i = 0;
+
+    while (i < size) {
+        unsigned int part1 = decode_escape_sequence(line, i);
+        unsigned int part2 = decode_escape_sequence(line, i);
+        unsigned int part3 = decode_escape_sequence(line, i);
+        unsigned int part4 = decode_escape_sequence(line, i);
+
+        temp = part1 + part2 + part3 + part4;
+        decrypted_text.push_back(decrypt_char(temp)); // Assuming decrypt_char is defined elsewhere
+    }
+}
 void crypto::encrypt_file(file& source, int cLine)
 {
 	string data = source.readLineNum(cLine);

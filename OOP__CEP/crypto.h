@@ -56,10 +56,11 @@ class crypto {
 
 
 		//member functions for encryption and decreption
-		unsigned int encrypt_char(unsigned char);	//encrypt single char
+		unsigned int encrypt_char(unsigned int);	//encrypt single char
 		unsigned char decrypt_char(unsigned int);	//decrypt single char
 
 		string encrypt_character(unsigned char);
+		unsigned int decode_escape_sequence(const std::string& line, int& index);
 		string ascii_string(unsigned int);
 
 		void encrypt_string(string); //encrypt the string

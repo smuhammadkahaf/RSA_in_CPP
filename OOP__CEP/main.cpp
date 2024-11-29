@@ -63,7 +63,7 @@ int main()
 
 			cout << "File encryption in progress..." << endl;
 			obj.encrypt_file(source);
-			system("cls");
+			//system("cls");
 
 			cout << "Encryption successful. Your file is now securely locked." << endl;
 			break;
@@ -83,7 +83,7 @@ int main()
 			cout << "File decryption in progress..." << endl;
 			obj.decrypt_file(source);
 			system("cls");
-
+			
 			cout << "The decryption process has been completed successfully." << endl;
 			break;
 		}
