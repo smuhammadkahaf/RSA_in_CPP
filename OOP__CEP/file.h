@@ -7,9 +7,9 @@ using namespace std;
 #define FILE_H
 
 class file {
-	public:
+	private:
 		string fileName;
-		ifstream read;//take input from file
+	
 		
 	public:
 		file(string);	//constructor

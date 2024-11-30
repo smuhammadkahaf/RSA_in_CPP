@@ -5,20 +5,21 @@
 #include "file.h"
 using namespace std;
 
-file::file(string n):fileName{n}
+file::file(string n):fileName{n}//constructor
 {
-	read.open(fileName);
+
 }
 
 bool file :: isFileExist()//validate the existance of file
 {
 	ifstream file(fileName);
-	if (file.is_open())
+
+	if (file.is_open())//check if file opens ore not
 	{
-		file.close();
+		file.close();//if opens first close it
 		return true;
 	}
-
+		
 	return false;
 }
 
@@ -47,7 +48,7 @@ string file:: readLineNum(int line)	//read the particular line number
 	while (getline(file, result))
 	{
 		current_line++;
-		if (current_line == line)
+		if (current_line == line)//if required line number is same as current read line 
 		{
 			file.close();
 			return result;
@@ -59,8 +60,10 @@ string file:: readLineNum(int line)	//read the particular line number
 void file::writeFile(string data, bool newline )		//write in file (if file not created it create itself)
 {
 	string name ="ED_";
-	name.append(fileName);
-	ofstream out;
+	name.append(fileName);//to change processed file name
+
+	ofstream out;//to write in file
+
 	out.open(name, std::ios_base::app | std::ios_base::out);
 	//above line open the file and keep the previos data, new data will be continue.
 	
@@ -69,6 +72,5 @@ void file::writeFile(string data, bool newline )		//write in file (if file not c
 	{
 		out << "\n";//to change the line for future 
 	}
-	//out.flush();
 	out.close();
 }

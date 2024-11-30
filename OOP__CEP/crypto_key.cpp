@@ -7,12 +7,10 @@ using namespace std;
 
 
 //Key generation continue here
-int crypto::getRandom()
+int crypto::getRandom()//this function return  any random number
 {
-
-
-	int x = rand() % 999 + 2;
-
+	int x = rand() % 999 + 2;//rand() return random number
+	//+2 means it should not be 0 or 1
 	return x;
 }
 
@@ -20,9 +18,10 @@ bool crypto::validatePrime(int x)
 {
 	for (int i = 2; i < x; i++)
 	{
+		// check each number if it is factor or not
 		if (x % i == 0)
 		{
-			return false;
+			return false;// if yes means , it is not prime number
 		}
 	}
 	return true;
@@ -53,7 +52,7 @@ void crypto::generateE(void)
 {
 	E = getPrime();
 
-	if (E > T)
+	if (E >= T)
 	{
 		generateE();
 	}
@@ -79,6 +78,7 @@ void crypto::createKeys(void)
 	P = getPrime();
 	Q = getPrime();
 
+	//we want number in between 256 to 1000
 	while (P * Q < 256 || P * Q >1000)
 	{
 		P = getPrime();

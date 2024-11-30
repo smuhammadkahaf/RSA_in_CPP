@@ -13,7 +13,7 @@ class crypto {
 
 		//Data members important for RSA implementation
 		string fileName;
-		int P,Q;	//prime numbers	---> max-85
+		int P,Q;	//prime numbers	---> from 256 to 1000
 		int N;		//product
 		int T;		//totient
 		int E;		//public key
@@ -73,7 +73,7 @@ class crypto {
 
 
 		//member functions for key generation
-		int getRandom(void);		//return number from 3 to 85  
+		int getRandom(void);		//return number from 0 to 1000 
 		bool validatePrime(int);	// verify passed number is prime or not
 		int getPrime(void);			// return random prime number
 		void calculateN(void);		// calculate product of  P and Q
