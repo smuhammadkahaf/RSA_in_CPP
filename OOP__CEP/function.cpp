@@ -3,6 +3,39 @@
 #include "file.h"
 using namespace std;
 
+void animation()
+{
+	cout << "\t<"; Sleep(60);
+	cout << "F"; Sleep(60);
+	cout << "i"; Sleep(60);
+	cout << "l"; Sleep(60);
+	cout << "e"; Sleep(60);
+	cout << " "; Sleep(60);
+	cout << "E"; Sleep(60);
+	cout << "n"; Sleep(60);
+	cout << "c"; Sleep(60);
+	cout << "r"; Sleep(60);
+	cout << "y"; Sleep(60);
+	cout << "p"; Sleep(60);
+	cout << "t"; Sleep(60);
+	cout << "i"; Sleep(60);
+	cout << "o"; Sleep(60);
+	cout << "n"; Sleep(60);
+	cout << " "; Sleep(60);
+	cout << "&"; Sleep(60);
+	cout << " "; Sleep(60);
+	cout << "D"; Sleep(60);
+	cout << "e"; Sleep(60);
+	cout << "c"; Sleep(60);
+	cout << "r"; Sleep(60);
+	cout << "y"; Sleep(60);
+	cout << "p"; Sleep(60);
+	cout << "t"; Sleep(60);
+	cout << "i"; Sleep(60);
+	cout << "o"; Sleep(60);
+	cout << "n"; Sleep(60);
+	cout << endl << endl;
+}
 int mainMenu(void)
 {
 	int x;

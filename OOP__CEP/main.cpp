@@ -6,6 +6,7 @@
 
 using namespace std;
 
+void animation();
 int mainMenu(void);
 void takeKey(int& , int& );
 string takeName(bool=true);
@@ -14,6 +15,7 @@ int main()
 {
 	srand(time(0));	//get time Pc time in miliseconds and use it as a seed for random number
 	system("color 17");
+	animation();
 	
 	
 	//variables
