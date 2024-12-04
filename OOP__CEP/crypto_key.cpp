@@ -76,7 +76,9 @@ void crypto::createKeys(void)
 {
 
 	P = getPrime();
-	Q = getPrime();
+	do {
+		Q = getPrime();
+	} while (P == Q);
 
 	//we want number in between 256 to 1000
 	while (P * Q < 256 || P * Q >1000)
